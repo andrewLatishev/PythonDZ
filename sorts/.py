@@ -89,7 +89,7 @@ def insertion_binary_search(list_):
         left = 0
         right = index - 1
         while left < right:
-            middle = left + (right - left) // 2
+            middle = (right + left) // 2
             if i < list_[middle]:
                 right = middle
             else:
