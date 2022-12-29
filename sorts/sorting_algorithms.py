@@ -2,8 +2,8 @@ import math
 import time
 import random
 
-NUMBER_OF_ELEMENTS_IN_TEST_LIST = 1000000
-NUMBER_OF_TESTS = 10000
+NUMBER_OF_ELEMENTS_IN_TEST_LIST = 1000
+NUMBER_OF_TESTS = 100
 RAND_MAX = 10000
 
 
@@ -43,7 +43,7 @@ def test(func):
         timer = time.time() - timer
         total_timer += timer
         if sort_check(test_list):
-            print("Required time in test №", test_number + 1, "is", timer, "seconds")
+            '''print("Required time in test №", test_number + 1, "is", timer, "seconds")'''
         else:
             print("Error in test №", test_number + 1)
     print("Required time for", NUMBER_OF_TESTS, "tests is", total_timer, "seconds")
@@ -72,32 +72,57 @@ def simple_search(list_, search_elem):
     return None
 
 
-def insertion_search(list_):
+def insertion_sort(list_):
     for index in range(1, len(list_)):
         i = index
-        temp = list_[i]
-        while i > 0 and temp < list_[i - 1]:
+        t = list_[i]
+        while i > 0 and t < list_[i - 1]:
             list_[i] = list_[i - 1]
             i -= 1
-        list_[i] = temp
+        list_[i] = t
     return list_
 
 
-def insertion_binary_search(list_):
+def insertion_binary_sort(list_):
     for index in range(len(list_)):
         i = list_[index]
-        left = 0
-        right = index - 1
-        while left < right:
-            middle = (right + left) // 2
+        l = 0
+        r = index - 1
+        while l < r:
+            middle = (r + l) // 2
             if i < list_[middle]:
-                right = middle
+                r = middle
             else:
-                left = middle + 1
-        for j in range(index, left + 1, -1):
+                l = middle + 1
+        for j in range(index, l + 1, -1):
             list_[j] = list_[j - 1]
-        list_[left] = i
+        list_[l] = i
     return list_
+
+
+list_ = [500, 9, 10, 5, 2, 4, 7, 435]
+def quick_sort(list_):
+    if len(list_) <= 1:
+        return list_
+    else:
+        s = list_[0]
+        left = [i for i in list_ if i < s]
+        m = [i for i in list_ if i == s]
+        right = [i for i in list_ if i > s]
+        return quick_sort(left) + m + quick_sort(right)
+
+
+print(quick_sort(list_))
+
+
+def selection_Sort(n):
+    for i in range(len(n) - 1):
+        m = i
+        for j in range(i + 1, len(n)):
+            if n[j] < n[m]:
+                m = j
+        n[i], n[m] = n[m], n[i]
+    return n
 
 
 def binary_search(list_, search_elem):
@@ -110,7 +135,6 @@ def binary_search(list_, search_elem):
         elif search_elem < list_[search_middle]:
             search_right = search_middle - 1
         else:
-
             return search_middle
     if search_left == search_right:
         if list_[search_left] == search_elem:
@@ -118,6 +142,43 @@ def binary_search(list_, search_elem):
         else:
             return None
     return None
+
+
+def merge(list1, list2):
+    index1 = 0
+    index2 = 0
+    list_ = []
+    while (index1 < len(list1)) and (index2 < len(list2)):
+        if list1[index1] < list2[index2]:
+            list_.append(list1[index1])
+            index1 += 1
+        else:
+            list_.append(list2[index2])
+            index2 += 1
+    while index1 < len(list1):
+        list_.append(list1[index1])
+        index1 += 1
+    while index2 < len(list2):
+        list_.append(list2[index2])
+        index2 += 1
+    return list_
+
+
+def merge_sort(list_):
+    if len(list_) > 2:
+        middle = len(list_) // 2
+        list_[:middle] = merge_sort(list_[:middle])
+        list_[middle:] = merge_sort(list_[middle:])
+        m_list = merge(list_[:middle], list_[middle:])
+        return m_list
+    elif len(list_) == 2:
+        s = max(list_)
+        list_[0] = min(list_)
+        list_[1] = s
+        #print(list_)
+        return list_
+    else:
+        return list_
 
 
 def search_check(list_, search_elem, answer):
@@ -138,8 +199,10 @@ def search_check(list_, search_elem, answer):
             return False
 
 
-search_test(insertion_search)
-search_test(insertion_binary_search)
+test(selection_Sort)
+#test(merge_sort)
+#test(insertion_sort)
+#test(insertion_binary_sort)
 # search_test(binary_search)
 # search_test(simple_search)
 # test(BubbleSort)
