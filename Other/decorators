@@ -1,0 +1,39 @@
+def debug(func):
+    def inner(*args, **kwargs):
+        print(f'Call {func.__name__} with arguments {args, kwargs}')
+        result = func(*args, **kwargs)()
+        print(f'Result of {func.__name__}: {result} ')
+        return result
+    return inner
+
+
+def func(x):
+    def func2(y):
+        print(f'Second function with argument {x}, {y}')
+
+    return func2
+
+
+func(10)(-5)
+
+
+@debug
+def speak(text, loud):
+    def yell():
+        print(f'{text.upper()}!')
+
+    def whisper():
+        print(f'{text.lower()}...')
+
+    if loud > 1:
+        return yell
+    else:
+        return whisper
+speak('Hello world', loud = 20)
+speak('Hello world', loud = 0.4)
+
+
+#Декораторы
+
+
+
