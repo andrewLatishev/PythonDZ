@@ -1,7 +1,15 @@
+def counter(func):
+    def dec(*args, **kwargs):
+        dec.count += 1
+        return func(*args, **kwargs)
+
+    dec.count = 0
+    return dec
+
 class Snow:
     def __init__(self, countSnowFlake):
         self.countSnowFlake = countSnowFlake
-
+    @counter
     def __add__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -9,6 +17,7 @@ class Snow:
         #     return Snow(self.countSnowFlake + other.countSnowFlake)
         return Snow(self.countSnowFlake + other)
 
+    @counter
     def __sub__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -16,6 +25,7 @@ class Snow:
         #     return Snow(self.countSnowFlake - other.countSnowFlake)
         return Snow(self.countSnowFlake - other)
 
+    @counter
     def __mul__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -23,6 +33,7 @@ class Snow:
         #     return Snow(self.countSnowFlake * other.countSnowFlake)
         return Snow(self.countSnowFlake * other)
 
+    @counter
     def __truediv__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -30,6 +41,7 @@ class Snow:
         #     return Snow(self.countSnowFlake // other.countSnowFlake)
         return Snow(self.countSnowFlake // other)
 
+    @counter
     def make_snow(self, line):
         s = '*'
         for i in range(self.countSnowFlake // line):
@@ -41,6 +53,7 @@ class NewSnow(Snow):
     def __init__(self, countSnowFlake):
         self.countSnowFlake = countSnowFlake
 
+    @counter
     def __iadd__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -49,6 +62,7 @@ class NewSnow(Snow):
         self.countSnowFlake += other
         return self
 
+    @counter
     def __isub__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -57,6 +71,7 @@ class NewSnow(Snow):
         self.countSnowFlake -= other
         return self
 
+    @counter
     def __imul__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -65,6 +80,7 @@ class NewSnow(Snow):
         self.countSnowFlake *= other
         return self
 
+    @counter
     def __itruediv__(self, other):
         # if not isinstance(other, (int)):
         #     raise ArithmeticError
@@ -73,6 +89,7 @@ class NewSnow(Snow):
         self.countSnowFlake //= other
         return self
 
+    @counter
     def make_snow(self, max_height: int):
         num_of_columns = self.countSnowFlake // max_height
         remainder = self.countSnowFlake % max_height
@@ -85,11 +102,11 @@ class NewSnow(Snow):
 
 try:
     snow = Snow(29)
-    #snow = snow + 5
+    snow = snow + '5'
     #snow = snow + 'Winter'
     snow.make_snow(10)
     nsnow = NewSnow(33)
-    nsnow /= '3'
+    nsnow /= 3
     nsnow.make_snow(4)
 except (TypeError):
     print("Неверный тип прибавляемого аргумента")
