@@ -1,0 +1,41 @@
+#Имена с подчеркиваниями
+#1. Префиксное подчеркивание
+# Пример: _name
+#Обозначение внутренней переменной (приватная)
+
+class MyClass():
+    def __init__(self):
+        self.var1 = 10
+        self.var2 = 20
+        self._var = 30
+        self.__name = 40
+class ChildClass(MyClass):
+    def __init__(self):
+        super().__init__()
+        self.var1 = -10
+        self.var2 = -20
+        self._var = -30
+        self.__name = -40
+
+obj = MyClass()
+obj2 = ChildClass()
+print(obj.var1, obj.var2, obj._var, obj._MyClass__name)
+print(obj2.var1, obj2.var2, obj2._var, obj2._ChildClass__name)
+print(dir(obj))
+print(dir(obj2))
+
+#Постфиксное подчеркивание
+# Пример: list_
+# Используется, если имя без подчеркивания занято или зарезервировано
+# 3. Дандер-переменная
+# Пример: __name
+# Используется, чтобы не менялось значение в дочерних классах
+# 4. Магические методы
+# Пример: __init__, __add__
+# Встроенные методы, Перегрузка методов
+# 5. Одинарное подчеркивание
+# Пример: _
+# Для вынутренней переменной цикла, когда не предполагается дальнейшее использование переменной
+list_ = [(1, 'a'), (2, 'b'), (10, 'c'), (20, 'd')]
+for number, _ in list_:
+    print(number)
